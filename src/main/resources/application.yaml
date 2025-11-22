@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:D:/JavaProject/Security2DbThymeleaf/students
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  h2:
+    console.enabled: true
+
+  main:
+    allow-circular-references: true
+server:
+  port: 8084

@@ -1,0 +1,4 @@
+2025-11-22 12:02:47.186291+05:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM ROLES STUDENTS [*]USERS USERS_ROLES"
+Syntax error in SQL statement "SELECT * FROM ROLES STUDENTS [*]USERS USERS_ROLES"; SQL statement:
+SELECT * FROM ROLES STUDENTS USERS USERS_ROLES [42000-232]
