@@ -33,14 +33,15 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDto userDto) {
 
         User user = new User();
+        user.setUsername(userDto.getUsername());
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
         // encrypt the password using spring security
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
+        Role role = roleRepository.findByName("ROLE_READ_ONLY");
         if (role == null) {
-            role = checkRoleExist();
+            role = checkRoleExist("ROLE_READ_ONLY");
         }
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
@@ -49,6 +50,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+    
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            // отцепляем роли, чтобы не было лишних проблем с users_roles
+            if (user.getRoles() != null) {
+                user.getRoles().clear();
+            }
+            userRepository.delete(user);
+        }
     }
 
     @Override
@@ -61,17 +79,24 @@ public class UserServiceImpl implements UserService {
 
     private UserDto mapToUserDto(User user) {
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
         String[] str = user.getName().split(" ");
-        userDto.setFirstName(str[0]);
-        userDto.setLastName(str[1]);
+        if (str.length >= 2) {
+            userDto.setFirstName(str[0]);
+            userDto.setLastName(str[1]);
+        } else {
+            userDto.setFirstName(user.getName());
+            userDto.setLastName("");
+        }
         userDto.setEmail(user.getEmail());
         return userDto;
     }
 
 
-    private Role checkRoleExist() {
+    private Role checkRoleExist(String roleName) {
         Role role = new Role();
-        role.setName("ROLE_ADMIN");
+        role.setName(roleName);
         return roleRepository.save(role);
     }
 }

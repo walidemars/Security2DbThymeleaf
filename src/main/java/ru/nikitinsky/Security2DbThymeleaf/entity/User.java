@@ -21,6 +21,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
     @Column(nullable = false)
     private String name;
 
@@ -30,7 +33,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // Важно: CascadeType.ALL тут опасен — при удалении пользователя может попытаться удалить роли.
+    // Для учебного проекта достаточно PERSIST/MERGE.
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },

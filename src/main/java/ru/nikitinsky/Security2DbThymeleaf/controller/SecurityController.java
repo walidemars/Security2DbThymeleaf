@@ -7,6 +7,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import ru.nikitinsky.Security2DbThymeleaf.dto.UserDto;
 import ru.nikitinsky.Security2DbThymeleaf.entity.User;
 import ru.nikitinsky.Security2DbThymeleaf.service.UserService;
@@ -26,6 +29,11 @@ public class SecurityController {
     public String home() {
         return "index";
     }
+    
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/index";
+    }
 
     @GetMapping("/login")
     public String login() {
@@ -43,16 +51,22 @@ public class SecurityController {
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
                                Model model) {
-        User existingUser = userService.findUserByEmail(userDto.getEmail());
+        User existingUserByEmail = userService.findUserByEmail(userDto.getEmail());
 
-        if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
+        if (existingUserByEmail != null && existingUserByEmail.getEmail() != null && !existingUserByEmail.getEmail().isEmpty()) {
             result.rejectValue("email", null,
                     "На этот адрес электронной почты уже зарегистрирована учетная запись");
         }
 
+        User existingUserByUsername = userService.findUserByUsername(userDto.getUsername());
+        if (existingUserByUsername != null && existingUserByUsername.getUsername() != null && !existingUserByUsername.getUsername().isEmpty()) {
+            result.rejectValue("username", null,
+                    "Этот username уже занят");
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("user", userDto);
-            return "/register";
+            return "register";
         }
 
         userService.saveUser(userDto);
@@ -64,5 +78,22 @@ public class SecurityController {
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @GetMapping("/users/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String deleteUser(@RequestParam Long userId, Authentication authentication) {
+        // Небольшая защита от случайного удаления самого себя
+        UserDto current = null;
+        if (authentication != null) {
+            // authentication.getName() == username
+            // Найдем текущего пользователя по username и сравним id
+            User u = userService.findUserByUsername(authentication.getName());
+            if (u != null && u.getId() == userId.intValue()) {
+                return "redirect:/users?error=self";
+            }
+        }
+        userService.deleteUserById(userId);
+        return "redirect:/users?deleted";
     }
 }

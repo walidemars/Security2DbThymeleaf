@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:D:/JavaProject/Security2DbThymeleaf/students
+    url: jdbc:h2:file:./movies
 
   jpa:
     hibernate:
@@ -11,5 +11,19 @@ spring:
 
   main:
     allow-circular-references: true
+
 server:
   port: 8084
+
+logging:
+  file:
+    name: application.log
+  level:
+    root: INFO
+    ru.nikitinsky.Security2DbThymeleaf: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
