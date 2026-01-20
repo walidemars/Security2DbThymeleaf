@@ -83,11 +83,8 @@ public class SecurityController {
     @GetMapping("/users/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(@RequestParam Long userId, Authentication authentication) {
-        // Небольшая защита от случайного удаления самого себя
         UserDto current = null;
         if (authentication != null) {
-            // authentication.getName() == username
-            // Найдем текущего пользователя по username и сравним id
             User u = userService.findUserByUsername(authentication.getName());
             if (u != null && u.getId() == userId.intValue()) {
                 return "redirect:/users?error=self";

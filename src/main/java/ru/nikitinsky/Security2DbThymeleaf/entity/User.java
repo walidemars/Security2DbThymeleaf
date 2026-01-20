@@ -33,9 +33,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // Важно: CascadeType.ALL тут опасен — при удалении пользователя может попытаться удалить роли.
-    // Для учебного проекта достаточно PERSIST/MERGE.
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },

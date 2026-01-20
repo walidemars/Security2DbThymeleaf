@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить роли</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Каталог фильмов</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" th:href="@{/roles}">Назад</a>
+        </div>
+    </div>
+</nav>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Изменить роли пользователя</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Пользователь:</strong> <span th:text="${user.username}"></span></p>
+                    <p><strong>Имя:</strong> <span th:text="${user.name}"></span></p>
+                    <form th:action="@{/roles/save}" method="post">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <div class="mb-3">
+                            <label class="form-label">Выберите роли:</label>
+                            <div th:each="role : ${allRoles}" class="form-check">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       name="roleNames" 
+                                       th:value="${role.name}"
+                                       th:id="${'role_' + role.id}"
+                                       th:checked="${userRoleNames.contains(role.name)}"/>
+                                <label class="form-check-label" th:for="${'role_' + role.id}" th:text="${role.name}"></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                        <a th:href="@{/roles}" class="btn btn-secondary">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
