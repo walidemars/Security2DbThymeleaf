@@ -48,13 +48,13 @@
                         <dt class="col-sm-4">Бюджет</dt>
                         <dd class="col-sm-8">
                             <span th:if="${movie.budget != null}"
-                                  th:text="${#numbers.formatDecimal(movie.budget, 0, 'COMMA', 2, 'POINT')}"></span>
+                                  th:text="${#strings.replace(#numbers.formatDecimal(movie.budget, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                             <span th:if="${movie.budget == null}">не указан</span>
                         </dd>
 
                         <dt class="col-sm-4">Кассовые сборы (общие)</dt>
                         <dd class="col-sm-8">
-                            <span th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 2, 'POINT')}"></span>
+                            <span th:text="${#strings.replace(#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                         </dd>
                     </dl>
 
@@ -66,7 +66,7 @@
                         <li class="list-group-item"
                             th:each="actor : ${movie.actors}">
                             <a th:href="@{/actors/{id}(id=${actor.id})}"
-                               th:text="${actor.surname + ' ' + actor.name}"></a>
+                               th:text="${actor.name + ' ' + actor.surname}"></a>
                         </li>
                     </ul>
                 </div>

@@ -51,32 +51,25 @@
                     <p>
                         <strong>Бюджет фильма:</strong>
                         <span th:if="${selectedMovie.budget != null}"
-                              th:text="${#numbers.formatDecimal(selectedMovie.budget, 0, 'COMMA', 2, 'POINT')}"></span>
+                              th:text="${#strings.replace(#numbers.formatDecimal(selectedMovie.budget, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                         <span th:if="${selectedMovie.budget == null}">не указан</span>
                     </p>
                     <p>
                         <strong>Кассовые сборы (общие):</strong>
-                        <span th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:text="${#strings.replace(#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
                     <p>
                         <strong>Прибыль (кассовые сборы минус бюджет):</strong>
-                        <span th:text="${#numbers.formatDecimal(profit, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:text="${#strings.replace(#numbers.formatDecimal(profit, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
                     <p>
-                        <strong>Необходимые сборы для окупаемости (2 бюджета):</strong>
-                        <span th:text="${#numbers.formatDecimal(requiredRevenueForBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <strong>Необходимые сборы для окупаемости:</strong>
+                        <span th:text="${#strings.replace(#numbers.formatDecimal(requiredRevenueForBreakEven, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
                     <p>
                         <strong>Сколько еще нужно заработать, чтобы выйти в 0 по кассе:</strong>
-                        <span th:text="${#numbers.formatDecimal(remainingToBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:text="${#strings.replace(#numbers.formatDecimal(remainingToBreakEven, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
-                    <div class="alert alert-info mt-3">
-                        Для того, чтобы фильм считался окупившимся, он должен заработать в прокате
-                        не менее двух своих бюджетов. То есть, если бюджет фильма составляет
-                        <span th:text="${#numbers.formatDecimal(selectedMovie.budget != null ? selectedMovie.budget : 0, 0, 'COMMA', 2, 'POINT')}"></span>,
-                        то минимальные кассовые сборы для выхода в ноль по студийным расчетам должны быть
-                        <span th:text="${#numbers.formatDecimal(requiredRevenueForBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>.
-                    </div>
                 </div>
             </div>
         </div>

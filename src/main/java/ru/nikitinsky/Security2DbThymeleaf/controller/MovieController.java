@@ -85,13 +85,15 @@ public class MovieController {
         Movie movie = new Movie();
         mav.addObject("movie", movie);
         mav.addObject("actors", actorRepository.findAll());
+        mav.addObject("boxOfficeRevenue", null);
         return mav;
     }
 
     @PostMapping("/movies/save")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String saveMovie(@ModelAttribute Movie movie,
-                            @RequestParam(required = false) List<Long> actorIds) {
+                            @RequestParam(required = false) List<Long> actorIds,
+                            @RequestParam(required = false) Double boxOfficeRevenue) {
         log.info("/movies/save -> saving movie: {}", movie.getTitle());
         if (actorIds != null && !actorIds.isEmpty()) {
             List<Actor> selectedActors = actorRepository.findAllById(actorIds);
@@ -99,7 +101,28 @@ public class MovieController {
         } else {
             movie.setActors(new ArrayList<>());
         }
-        movieRepository.save(movie);
+        Movie savedMovie = movieRepository.save(movie);
+
+        if (boxOfficeRevenue != null) {
+            List<BoxOffice> list = boxOfficeRepository.findByMovie(savedMovie);
+            BoxOffice boxOffice = null;
+            if (list != null) {
+                for (BoxOffice bo : list) {
+                    if (bo.getYear() != null && savedMovie.getYear() != null && bo.getYear().equals(savedMovie.getYear())) {
+                        boxOffice = bo;
+                        break;
+                    }
+                }
+            }
+            if (boxOffice == null) {
+                boxOffice = new BoxOffice();
+                boxOffice.setMovie(savedMovie);
+                boxOffice.setYear(savedMovie.getYear());
+            }
+            boxOffice.setRevenue(boxOfficeRevenue);
+            boxOffice.setCurrency("USD");
+            boxOfficeRepository.save(boxOffice);
+        }
         return "redirect:/movies";
     }
 
@@ -115,6 +138,20 @@ public class MovieController {
         }
         mav.addObject("movie", movie);
         mav.addObject("actors", actorRepository.findAll());
+
+        Double boxOfficeRevenue = null;
+        if (movie.getId() != null) {
+            List<BoxOffice> list = boxOfficeRepository.findByMovie(movie);
+            if (list != null) {
+                for (BoxOffice bo : list) {
+                    if (bo.getYear() != null && movie.getYear() != null && bo.getYear().equals(movie.getYear())) {
+                        boxOfficeRevenue = bo.getRevenue();
+                        break;
+                    }
+                }
+            }
+        }
+        mav.addObject("boxOfficeRevenue", boxOfficeRevenue);
         return mav;
     }
 

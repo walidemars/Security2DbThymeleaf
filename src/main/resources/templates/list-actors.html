@@ -30,8 +30,8 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Фамилия</th>
                     <th>Имя</th>
+                    <th>Фамилия</th>
                     <th>Возраст</th>
                     <th>Страна</th>
                     <th th:if="${canEdit}">Действия</th>
@@ -42,9 +42,9 @@
                     <td th:text="${actor.id}"></td>
                     <td>
                         <a th:href="@{/actors/{id}(id=${actor.id})}"
-                           th:text="${actor.surname}"></a>
+                           th:text="${actor.name}"></a>
                     </td>
-                    <td th:text="${actor.name}"></td>
+                    <td th:text="${actor.surname}"></td>
                     <td th:text="${actor.age}"></td>
                     <td th:text="${actor.country}"></td>
                     <td th:if="${canEdit}">
