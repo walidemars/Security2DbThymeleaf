@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${actor.surname + ' ' + actor.name}">Актер</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Каталог фильмов</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" th:href="@{/actors}">К списку актеров</a>
+        </div>
+    </div>
+</nav>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0" th:text="${actor.surname + ' ' + actor.name}">Актер</h3>
+                    <div th:if="${canEdit}">
+                        <a th:href="@{/actors/update(actorId=${actor.id})}" class="btn btn-sm btn-warning">Изменить</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-4">Фамилия</dt>
+                        <dd class="col-sm-8" th:text="${actor.surname}"></dd>
+
+                        <dt class="col-sm-4">Имя</dt>
+                        <dd class="col-sm-8" th:text="${actor.name}"></dd>
+
+                        <dt class="col-sm-4">Возраст</dt>
+                        <dd class="col-sm-8" th:text="${actor.age}"></dd>
+
+                        <dt class="col-sm-4">Страна</dt>
+                        <dd class="col-sm-8" th:text="${actor.country}"></dd>
+                    </dl>
+
+                    <h5 class="mt-4">Фильмы</h5>
+                    <div th:if="${actor.movies == null || actor.movies.isEmpty()}">
+                        <p>Информация о фильмах отсутствует.</p>
+                    </div>
+                    <ul th:if="${actor.movies != null && !actor.movies.isEmpty()}" class="list-group">
+                        <li class="list-group-item"
+                            th:each="movie : ${actor.movies}">
+                            <a th:href="@{/movies/{id}(id=${movie.id})}"
+                               th:text="${movie.title}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

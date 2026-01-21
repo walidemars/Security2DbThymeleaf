@@ -8,12 +8,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.nikitinsky.Security2DbThymeleaf.entity.Actor;
+import ru.nikitinsky.Security2DbThymeleaf.entity.BoxOffice;
 import ru.nikitinsky.Security2DbThymeleaf.entity.Movie;
 import ru.nikitinsky.Security2DbThymeleaf.repository.ActorRepository;
+import ru.nikitinsky.Security2DbThymeleaf.repository.BoxOfficeRepository;
 import ru.nikitinsky.Security2DbThymeleaf.repository.MovieRepository;
 
 import java.util.ArrayList;
@@ -30,6 +33,9 @@ public class MovieController {
     @Autowired
     private ActorRepository actorRepository;
 
+    @Autowired
+    private BoxOfficeRepository boxOfficeRepository;
+
     @GetMapping("/movies")
     public ModelAndView getAllMovies(Authentication authentication) {
         log.info("/movies -> connection by user: {}", authentication != null ? authentication.getName() : "anonymous");
@@ -39,6 +45,35 @@ public class MovieController {
                           (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                            authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
         mav.addObject("canEdit", canEdit);
+        return mav;
+    }
+
+    @GetMapping("/movies/{id}")
+    public ModelAndView getMovieDetails(@PathVariable Long id, Authentication authentication) {
+        log.info("/movies/{} -> movie details", id);
+        ModelAndView mav = new ModelAndView("movie-detail");
+        Optional<Movie> optionalMovie = movieRepository.findById(id);
+        if (optionalMovie.isEmpty()) {
+            mav.setViewName("redirect:/movies");
+            return mav;
+        }
+        Movie movie = optionalMovie.get();
+        mav.addObject("movie", movie);
+
+        List<BoxOffice> boxOffices = boxOfficeRepository.findByMovie(movie);
+        double totalRevenue = 0.0;
+        for (BoxOffice bo : boxOffices) {
+            if (bo.getRevenue() != null) {
+                totalRevenue = totalRevenue + bo.getRevenue();
+            }
+        }
+        mav.addObject("totalRevenue", totalRevenue);
+
+        boolean canEdit = authentication != null &&
+                (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) ||
+                        authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
+        mav.addObject("canEdit", canEdit);
+
         return mav;
     }
 

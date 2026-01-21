@@ -35,24 +35,20 @@
                     <th>Год</th>
                     <th>Жанр</th>
                     <th>Длительность (мин)</th>
-                    <th>Актеры</th>
                     <th th:if="${canEdit}">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="movie : ${movies}">
                     <td th:text="${movie.id}"></td>
-                    <td th:text="${movie.title}"></td>
+                    <td>
+                        <a th:href="@{/movies/{id}(id=${movie.id})}"
+                           th:text="${movie.title}"></a>
+                    </td>
                     <td th:text="${movie.director}"></td>
                     <td th:text="${movie.year}"></td>
                     <td th:text="${movie.genre}"></td>
                     <td th:text="${movie.duration}"></td>
-                    <td>
-                        <span th:if="${movie.actors == null || movie.actors.isEmpty()}">—</span>
-                        <span th:each="a, st : ${movie.actors}">
-                            <span th:text="${a.name + ' ' + a.surname}"></span><span th:if="${!st.last}">, </span>
-                        </span>
-                    </td>
                     <td th:if="${canEdit}">
                         <a th:href="@{/movies/update(movieId=${movie.id})}" class="btn btn-sm btn-warning">Изменить</a>
                         <a th:href="@{/movies/delete(movieId=${movie.id})}" class="btn btn-sm btn-danger" 

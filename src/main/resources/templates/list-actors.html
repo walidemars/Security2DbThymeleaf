@@ -40,7 +40,10 @@
                 <tbody>
                 <tr th:each="actor : ${actors}">
                     <td th:text="${actor.id}"></td>
-                    <td th:text="${actor.surname}"></td>
+                    <td>
+                        <a th:href="@{/actors/{id}(id=${actor.id})}"
+                           th:text="${actor.surname}"></a>
+                    </td>
                     <td th:text="${actor.name}"></td>
                     <td th:text="${actor.age}"></td>
                     <td th:text="${actor.country}"></td>

@@ -11,7 +11,6 @@ import ru.nikitinsky.Security2DbThymeleaf.entity.Movie;
 import ru.nikitinsky.Security2DbThymeleaf.repository.BoxOfficeRepository;
 import ru.nikitinsky.Security2DbThymeleaf.repository.MovieRepository;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Slf4j
@@ -25,55 +24,47 @@ public class CalculateController {
     private MovieRepository movieRepository;
 
     @GetMapping("/calculate")
-    public ModelAndView showCalculateForm() {
-        log.info("/calculate -> calculation form");
+    public ModelAndView showCalculateForm(@RequestParam(required = false) Long movieId) {
+        log.info("/calculate -> calculation form, movieId: {}", movieId);
         ModelAndView mav = new ModelAndView("calculate");
+
         List<Movie> movies = movieRepository.findAll();
         mav.addObject("movies", movies);
-        return mav;
-    }
 
-    @GetMapping("/calculate/result")
-    public ModelAndView calculateRevenue(@RequestParam(required = false) Long movieId,
-                                         @RequestParam(required = false) Integer year) {
-        log.info("/calculate/result -> calculating revenue for movie id: {}, year: {}", movieId, year);
-        ModelAndView mav = new ModelAndView("calculate-result");
-        
-        List<BoxOffice> boxOffices;
         if (movieId != null && movieId > 0) {
             Movie movie = movieRepository.findById(movieId).orElse(null);
             if (movie != null) {
-                boxOffices = boxOfficeRepository.findAll().stream()
-                        .filter(bo -> bo.getMovie().getId().equals(movieId))
-                        .toList();
                 mav.addObject("selectedMovie", movie);
-            } else {
-                boxOffices = boxOfficeRepository.findAll();
+
+                List<BoxOffice> boxOffices = boxOfficeRepository.findByMovie(movie);
+
+                double totalRevenue = 0.0;
+                for (BoxOffice boxOffice : boxOffices) {
+                    if (boxOffice.getRevenue() != null) {
+                        totalRevenue = totalRevenue + boxOffice.getRevenue();
+                    }
+                }
+
+                double budget = 0.0;
+                if (movie.getBudget() != null) {
+                    budget = movie.getBudget();
+                }
+
+                double profit = totalRevenue - budget;
+
+                double requiredRevenueForBreakEven = 2 * budget;
+                double remainingToBreakEven = requiredRevenueForBreakEven - totalRevenue;
+                if (remainingToBreakEven < 0) {
+                    remainingToBreakEven = 0;
+                }
+
+                mav.addObject("totalRevenue", totalRevenue);
+                mav.addObject("profit", profit);
+                mav.addObject("requiredRevenueForBreakEven", requiredRevenueForBreakEven);
+                mav.addObject("remainingToBreakEven", remainingToBreakEven);
             }
-        } else {
-            boxOffices = boxOfficeRepository.findAll();
         }
 
-        if (year != null && year > 0) {
-            boxOffices = boxOffices.stream()
-                    .filter(bo -> bo.getYear().equals(year))
-                    .toList();
-            mav.addObject("selectedYear", year);
-        }
-
-        double totalRevenue = boxOffices.stream()
-                .mapToDouble(BoxOffice::getRevenue)
-                .sum();
-
-        mav.addObject("boxOffices", boxOffices);
-        mav.addObject("totalRevenue", totalRevenue);
-        DecimalFormat df = new DecimalFormat("#,###");
-        mav.addObject("totalRevenueFormatted", df.format(Math.round(totalRevenue)).replace(",", " "));
-        mav.addObject("count", boxOffices.size());
-        
-        List<Movie> movies = movieRepository.findAll();
-        mav.addObject("movies", movies);
-        
         return mav;
     }
 }

@@ -29,9 +29,6 @@
                     <a class="nav-link" th:href="@{/actors}">Актеры</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" th:href="@{/boxoffice}">Кассовые сборы</a>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" th:href="@{/calculate}">Расчет</a>
                 </li>
                 <li class="nav-item">
@@ -95,9 +92,9 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Кассовые сборы</h5>
-                    <p class="card-text">Информация о кассовых сборах фильмов</p>
-                    <a sec:authorize="isAuthenticated()" th:href="@{/boxoffice}" class="btn btn-primary">Перейти</a>
+                    <h5 class="card-title">Расчеты</h5>
+                    <p class="card-text">Расчет прибыли и окупаемости фильмов</p>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/calculate}" class="btn btn-primary">Перейти</a>
                     <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn btn-secondary">Войти</a>
                 </div>
             </div>

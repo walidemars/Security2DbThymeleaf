@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,26 @@ public class ActorController {
                           (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                            authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
         mav.addObject("canEdit", canEdit);
+        return mav;
+    }
+
+    @GetMapping("/actors/{id}")
+    public ModelAndView getActorDetails(@PathVariable Long id, Authentication authentication) {
+        log.info("/actors/{} -> actor details", id);
+        ModelAndView mav = new ModelAndView("actor-detail");
+        Optional<Actor> optionalActor = actorRepository.findById(id);
+        if (optionalActor.isEmpty()) {
+            mav.setViewName("redirect:/actors");
+            return mav;
+        }
+        Actor actor = optionalActor.get();
+        mav.addObject("actor", actor);
+
+        boolean canEdit = authentication != null &&
+                (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")) ||
+                        authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")));
+        mav.addObject("canEdit", canEdit);
+
         return mav;
     }
 

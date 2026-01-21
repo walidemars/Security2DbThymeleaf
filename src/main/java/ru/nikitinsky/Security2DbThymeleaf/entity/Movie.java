@@ -36,6 +36,9 @@ public class Movie {
     @Column(nullable = false)
     private Integer duration;
 
+    @Column
+    private Double budget;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "movie_actors",

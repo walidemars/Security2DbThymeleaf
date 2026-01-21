@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Расчет кассовых сборов</title>
+    <title>Расчет прибыли</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -21,28 +21,62 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-header">
-                    <h2>Расчет кассовых сборов</h2>
+                    <h2>Расчет прибыли и окупаемости</h2>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/calculate/result}" method="get">
+                    <form th:action="@{/calculate}" method="get">
                         <div class="mb-3">
-                            <label class="form-label">Выберите фильм (необязательно)</label>
-                            <select class="form-select" name="movieId">
-                                <option value="">Все фильмы</option>
-                                <option th:each="movie : ${movies}" 
-                                        th:value="${movie.id}" 
-                                        th:text="${movie.title}"></option>
+                            <label class="form-label">Выберите фильм</label>
+                            <select class="form-select" name="movieId" required>
+                                <option value="">-- выберите фильм --</option>
+                                <option th:each="movie : ${movies}"
+                                        th:value="${movie.id}"
+                                        th:text="${movie.title}"
+                                        th:selected="${selectedMovie != null and selectedMovie.id == movie.id}"></option>
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Выберите год (необязательно)</label>
-                            <input type="number" class="form-control" name="year" placeholder="Год" min="1900" max="2100"/>
                         </div>
                         <button type="submit" class="btn btn-primary">Рассчитать</button>
                         <a th:href="@{/index}" class="btn btn-secondary">Отмена</a>
                     </form>
+                </div>
+            </div>
+
+            <div th:if="${selectedMovie != null}" class="card">
+                <div class="card-header">
+                    <h4 th:text="${'Результат для фильма: ' + selectedMovie.title}"></h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>Бюджет фильма:</strong>
+                        <span th:if="${selectedMovie.budget != null}"
+                              th:text="${#numbers.formatDecimal(selectedMovie.budget, 0, 'COMMA', 2, 'POINT')}"></span>
+                        <span th:if="${selectedMovie.budget == null}">не указан</span>
+                    </p>
+                    <p>
+                        <strong>Кассовые сборы (общие):</strong>
+                        <span th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 2, 'POINT')}"></span>
+                    </p>
+                    <p>
+                        <strong>Прибыль (кассовые сборы минус бюджет):</strong>
+                        <span th:text="${#numbers.formatDecimal(profit, 0, 'COMMA', 2, 'POINT')}"></span>
+                    </p>
+                    <p>
+                        <strong>Необходимые сборы для окупаемости (2 бюджета):</strong>
+                        <span th:text="${#numbers.formatDecimal(requiredRevenueForBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>
+                    </p>
+                    <p>
+                        <strong>Сколько еще нужно заработать, чтобы выйти в 0 по кассе:</strong>
+                        <span th:text="${#numbers.formatDecimal(remainingToBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>
+                    </p>
+                    <div class="alert alert-info mt-3">
+                        Для того, чтобы фильм считался окупившимся, он должен заработать в прокате
+                        не менее двух своих бюджетов. То есть, если бюджет фильма составляет
+                        <span th:text="${#numbers.formatDecimal(selectedMovie.budget != null ? selectedMovie.budget : 0, 0, 'COMMA', 2, 'POINT')}"></span>,
+                        то минимальные кассовые сборы для выхода в ноль по студийным расчетам должны быть
+                        <span th:text="${#numbers.formatDecimal(requiredRevenueForBreakEven, 0, 'COMMA', 2, 'POINT')}"></span>.
+                    </div>
                 </div>
             </div>
         </div>
