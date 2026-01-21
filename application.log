@@ -350,3 +350,156 @@
 2026-01-21T10:04:43.581+05:00  INFO 14936 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-01-21T10:04:43.582+05:00  INFO 14936 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-01-21T10:04:43.584+05:00  INFO 14936 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-21T13:46:16.710+05:00  INFO 20180 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Starting MovieCatalog using Java 21.0.9 with PID 20180 (D:\JavaProject\KursovayaMovieCatalog\target\classes started by Евгений in D:\JavaProject\KursovayaMovieCatalog)
+2026-01-21T13:46:16.712+05:00  INFO 20180 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : No active profile set, falling back to 1 default profile: "default"
+2026-01-21T13:46:17.654+05:00  INFO 20180 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21T13:46:17.725+05:00  INFO 20180 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 6 JPA repository interfaces.
+2026-01-21T13:46:18.309+05:00  INFO 20180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-01-21T13:46:18.324+05:00  INFO 20180 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-21T13:46:18.324+05:00  INFO 20180 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-01-21T13:46:18.384+05:00  INFO 20180 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-21T13:46:18.384+05:00  INFO 20180 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1634 ms
+2026-01-21T13:46:18.669+05:00  INFO 20180 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-21T13:46:18.724+05:00  INFO 20180 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2026-01-21T13:46:18.759+05:00  INFO 20180 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-21T13:46:19.015+05:00  INFO 20180 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21T13:46:19.041+05:00  INFO 20180 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-21T13:46:19.245+05:00  INFO 20180 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./movies user=
+2026-01-21T13:46:19.247+05:00  INFO 20180 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-21T13:46:19.306+05:00  INFO 20180 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21T13:46:20.048+05:00  INFO 20180 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21T13:46:20.091+05:00  INFO 20180 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T13:46:20.517+05:00  WARN 20180 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-21T13:46:20.546+05:00  INFO 20180 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-01-21T13:46:20.792+05:00  INFO 20180 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-01-21T13:46:20.825+05:00  INFO 20180 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-01-21T13:46:21.169+05:00  INFO 20180 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./movies'
+2026-01-21T13:46:21.241+05:00  INFO 20180 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-01-21T13:46:21.253+05:00  INFO 20180 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Started MovieCatalog in 5.044 seconds (process running for 5.424)
+2026-01-21T13:47:32.487+05:00  INFO 20180 --- [http-nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21T13:47:32.488+05:00  INFO 20180 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-21T13:47:32.489+05:00  INFO 20180 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-21T13:47:51.146+05:00  INFO 20180 --- [http-nio-8084-exec-3] r.n.M.controller.AboutController         : /about -> about page
+2026-01-21T14:06:58.554+05:00  INFO 20180 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21T14:06:58.558+05:00  INFO 20180 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-01-21T14:06:58.564+05:00  INFO 20180 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T14:06:58.566+05:00  INFO 20180 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-21T14:06:58.567+05:00  INFO 20180 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-21T14:07:00.720+05:00  INFO 19860 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Starting MovieCatalog using Java 21.0.9 with PID 19860 (D:\JavaProject\KursovayaMovieCatalog\target\classes started by Евгений in D:\JavaProject\KursovayaMovieCatalog)
+2026-01-21T14:07:00.722+05:00  INFO 19860 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : No active profile set, falling back to 1 default profile: "default"
+2026-01-21T14:07:01.592+05:00  INFO 19860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21T14:07:01.649+05:00  INFO 19860 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 6 JPA repository interfaces.
+2026-01-21T14:07:02.161+05:00  INFO 19860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-01-21T14:07:02.173+05:00  INFO 19860 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-21T14:07:02.174+05:00  INFO 19860 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-01-21T14:07:02.225+05:00  INFO 19860 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-21T14:07:02.225+05:00  INFO 19860 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1467 ms
+2026-01-21T14:07:02.503+05:00  INFO 19860 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-21T14:07:02.541+05:00  INFO 19860 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2026-01-21T14:07:02.568+05:00  INFO 19860 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-21T14:07:02.789+05:00  INFO 19860 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21T14:07:02.812+05:00  INFO 19860 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-21T14:07:02.994+05:00  INFO 19860 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./movies user=
+2026-01-21T14:07:02.996+05:00  INFO 19860 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-21T14:07:03.053+05:00  INFO 19860 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21T14:07:03.773+05:00  INFO 19860 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21T14:07:03.814+05:00  INFO 19860 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T14:07:04.188+05:00  WARN 19860 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-21T14:07:04.215+05:00  INFO 19860 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-01-21T14:07:04.444+05:00  INFO 19860 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-01-21T14:07:04.475+05:00  INFO 19860 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-01-21T14:07:04.761+05:00  INFO 19860 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./movies'
+2026-01-21T14:07:04.825+05:00  INFO 19860 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-01-21T14:07:04.838+05:00  INFO 19860 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Started MovieCatalog in 4.606 seconds (process running for 4.925)
+2026-01-21T14:07:08.657+05:00  INFO 19860 --- [http-nio-8084-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21T14:07:08.658+05:00  INFO 19860 --- [http-nio-8084-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-21T14:07:08.659+05:00  INFO 19860 --- [http-nio-8084-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-01-21T14:08:20.436+05:00  INFO 19860 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21T14:08:20.442+05:00  INFO 19860 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-01-21T14:08:20.447+05:00  INFO 19860 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T14:08:20.448+05:00  INFO 19860 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-21T14:08:20.450+05:00  INFO 19860 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-01-21T14:08:22.645+05:00  INFO 18372 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Starting MovieCatalog using Java 21.0.9 with PID 18372 (D:\JavaProject\KursovayaMovieCatalog\target\classes started by Евгений in D:\JavaProject\KursovayaMovieCatalog)
+2026-01-21T14:08:22.647+05:00  INFO 18372 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : No active profile set, falling back to 1 default profile: "default"
+2026-01-21T14:08:23.522+05:00  INFO 18372 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21T14:08:23.580+05:00  INFO 18372 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 6 JPA repository interfaces.
+2026-01-21T14:08:24.122+05:00  INFO 18372 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-01-21T14:08:24.136+05:00  INFO 18372 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-21T14:08:24.136+05:00  INFO 18372 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-01-21T14:08:24.186+05:00  INFO 18372 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-21T14:08:24.187+05:00  INFO 18372 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1498 ms
+2026-01-21T14:08:24.469+05:00  INFO 18372 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-21T14:08:24.509+05:00  INFO 18372 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2026-01-21T14:08:24.539+05:00  INFO 18372 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-21T14:08:24.742+05:00  INFO 18372 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21T14:08:24.765+05:00  INFO 18372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-21T14:08:24.943+05:00  INFO 18372 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./movies user=
+2026-01-21T14:08:24.944+05:00  INFO 18372 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-21T14:08:24.985+05:00  INFO 18372 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21T14:08:25.653+05:00  INFO 18372 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21T14:08:25.694+05:00  INFO 18372 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T14:08:26.086+05:00  WARN 18372 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-21T14:08:26.118+05:00  INFO 18372 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-01-21T14:08:26.359+05:00  INFO 18372 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoints beneath base path '/actuator'
+2026-01-21T14:08:26.391+05:00  INFO 18372 --- [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-01-21T14:08:26.707+05:00  INFO 18372 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./movies'
+2026-01-21T14:08:26.770+05:00  INFO 18372 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2026-01-21T14:08:26.785+05:00  INFO 18372 --- [main] r.nikitinsky.MovieCatalog.MovieCatalog   : Started MovieCatalog in 4.65 seconds (process running for 4.974)
+2026-01-21T14:08:29.504+05:00  INFO 18372 --- [http-nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21T14:08:29.504+05:00  INFO 18372 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-01-21T14:08:29.505+05:00  INFO 18372 --- [http-nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-21T14:10:15.711+05:00  INFO 18372 --- [http-nio-8084-exec-10] r.n.M.controller.RoleController          : /roles -> role management page
+2026-01-21T14:10:40.417+05:00  INFO 18372 --- [http-nio-8084-exec-6] r.n.M.controller.RoleController          : /roles -> role management page
+2026-01-21T14:10:46.725+05:00  INFO 18372 --- [http-nio-8084-exec-7] r.n.M.controller.RoleController          : /roles -> role management page
+2026-01-21T14:10:52.091+05:00  INFO 18372 --- [http-nio-8084-exec-1] r.n.M.controller.RoleController          : /roles -> role management page
+2026-01-21T14:11:08.541+05:00  INFO 18372 --- [http-nio-8084-exec-7] r.n.M.controller.MovieController         : /movies -> connection by user: user
+2026-01-21T14:11:25.023+05:00  INFO 18372 --- [http-nio-8084-exec-9] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:11:29.951+05:00  INFO 18372 --- [http-nio-8084-exec-1] r.n.M.controller.MovieController         : /movies -> connection by user: user
+2026-01-21T14:11:32.777+05:00  INFO 18372 --- [http-nio-8084-exec-2] r.n.M.controller.MovieController         : /movies/5 -> movie details
+2026-01-21T14:11:48.117+05:00  INFO 18372 --- [http-nio-8084-exec-4] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:12:05.058+05:00  INFO 18372 --- [http-nio-8084-exec-3] r.n.M.controller.ActorController         : /actors/update -> form for actor id: 1
+2026-01-21T14:12:06.588+05:00  INFO 18372 --- [http-nio-8084-exec-7] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:12:07.857+05:00  INFO 18372 --- [http-nio-8084-exec-8] r.n.M.controller.ActorController         : /actors/1 -> actor details
+2026-01-21T14:12:11.126+05:00  INFO 18372 --- [http-nio-8084-exec-9] r.n.M.controller.ActorController         : /actors/6 -> actor details
+2026-01-21T14:12:30.378+05:00  INFO 18372 --- [http-nio-8084-exec-10] r.n.M.controller.ActorController         : /actors/update -> form for actor id: 6
+2026-01-21T14:12:34.666+05:00  INFO 18372 --- [http-nio-8084-exec-1] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:12:35.994+05:00  INFO 18372 --- [http-nio-8084-exec-2] r.n.M.controller.ActorController         : /actors/update -> form for actor id: 1
+2026-01-21T14:12:49.819+05:00  INFO 18372 --- [http-nio-8084-exec-4] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:12:51.250+05:00  INFO 18372 --- [http-nio-8084-exec-3] r.n.M.controller.ActorController         : /actors/1 -> actor details
+2026-01-21T14:12:52.501+05:00  INFO 18372 --- [http-nio-8084-exec-7] r.n.M.controller.MovieController         : /movies/4 -> movie details
+2026-01-21T14:12:55.011+05:00  INFO 18372 --- [http-nio-8084-exec-8] r.n.M.controller.MovieController         : /movies/update -> form for movie id: 4
+2026-01-21T14:13:25.709+05:00  INFO 18372 --- [http-nio-8084-exec-10] r.n.M.controller.CalculateController     : /calculate -> calculation form, movieId: null
+2026-01-21T14:13:30.568+05:00  INFO 18372 --- [http-nio-8084-exec-1] r.n.M.controller.CalculateController     : /calculate -> calculation form, movieId: 6
+2026-01-21T14:20:02.669+05:00  INFO 18372 --- [http-nio-8084-exec-4] r.n.M.controller.MovieController         : /movies -> connection by user: user
+2026-01-21T14:20:03.337+05:00  INFO 18372 --- [http-nio-8084-exec-3] r.n.M.controller.MovieController         : /movies/add -> form
+2026-01-21T14:21:18.853+05:00  INFO 18372 --- [http-nio-8084-exec-10] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:21:21.142+05:00  INFO 18372 --- [http-nio-8084-exec-1] r.n.M.controller.ActorController         : /actors/6 -> actor details
+2026-01-21T14:21:22.259+05:00  INFO 18372 --- [http-nio-8084-exec-2] r.n.M.controller.ActorController         : /actors/update -> form for actor id: 6
+2026-01-21T14:21:27.430+05:00  INFO 18372 --- [http-nio-8084-exec-6] r.n.M.controller.ActorController         : /actors -> connection by user: user
+2026-01-21T14:21:28.066+05:00  INFO 18372 --- [http-nio-8084-exec-5] r.n.M.controller.ActorController         : /actors/add -> form
+2026-01-21T14:47:15.135+05:00  INFO 18372 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21T14:47:15.139+05:00  INFO 18372 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-01-21T14:47:15.145+05:00  INFO 18372 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21T14:47:15.146+05:00  INFO 18372 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-21T14:47:15.147+05:00  INFO 18372 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

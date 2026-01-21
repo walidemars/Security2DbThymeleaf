@@ -31,8 +31,8 @@
                             <label class="form-label">Выберите фильм</label>
                             <select class="form-select" name="movieId" required>
                                 <option value="">-- выберите фильм --</option>
-                                <option th:each="movie : ${movies}"
-                                        th:value="${movie.id}"
+                                <option th:each="movie : ${movies}" 
+                                        th:value="${movie.id}" 
                                         th:text="${movie.title}"
                                         th:selected="${selectedMovie != null and selectedMovie.id == movie.id}"></option>
                             </select>
