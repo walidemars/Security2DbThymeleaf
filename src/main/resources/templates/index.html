@@ -37,9 +37,6 @@
                 <li sec:authorize="hasRole('ADMIN')" class="nav-item">
                     <a class="nav-link" th:href="@{/users}">Пользователи</a>
                 </li>
-                <li sec:authorize="hasRole('ADMIN')" class="nav-item">
-                    <a class="nav-link" th:href="@{/roles}">Управление ролями</a>
-                </li>
             </ul>
             <ul class="navbar-nav">
                 <li sec:authorize="!isAuthenticated()" class="nav-item">

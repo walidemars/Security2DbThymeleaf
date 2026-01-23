@@ -26,7 +26,7 @@
                     <h3 th:text="${movie.id != null ? 'Изменить фильм' : 'Добавить фильм'}"></h3>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/movies/save}" th:object="${movie}" method="post">
+                    <form th:action="@{/movies/save}" th:object="${movie}" method="post" id="movieForm">
                         <input type="hidden" th:field="*{id}"/>
                         <div class="mb-3">
                             <label class="form-label">Название</label>
@@ -50,12 +50,14 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Бюджет</label>
-                            <input type="text" class="form-control" th:field="*{budget}" placeholder="Например: 35000000"/>
+                            <input type="text" class="form-control number-input" id="budget" name="budget" 
+                                   th:value="${movie.budget != null ? #strings.replace(#numbers.formatDecimal(movie.budget, 0, 'COMMA', 0, 'POINT'), ',', ' ') : ''}" 
+                                   placeholder="Например: 35 000 000"/>
                             <div class="form-text">Укажите бюджет фильма (в той же валюте, что и кассовые сборы)</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Кассовые сборы</label>
-                            <input type="text" class="form-control" name="boxOfficeRevenue"
+                            <input type="text" class="form-control number-input" id="boxOfficeRevenue" name="boxOfficeRevenue"
                                    th:value="${boxOfficeRevenue}"/>
                         </div>
                         <div class="mb-3">
@@ -77,5 +79,91 @@
         </div>
     </div>
 </div>
+<script>
+    // Функция для форматирования числа с пробелами
+    function formatNumber(value) {
+        if (!value) return '';
+        // Преобразуем значение в строку и удаляем пробелы
+        let str = value.toString().trim().replace(/\s/g, '');
+        if (!str) return '';
+        
+        // Пытаемся распарсить число (поддерживает научную нотацию)
+        let num = parseFloat(str);
+        if (isNaN(num)) {
+            // Если не удалось распарсить, пытаемся извлечь только цифры
+            str = str.replace(/[^\d]/g, '');
+            num = parseFloat(str);
+            if (isNaN(num)) return '';
+        }
+        
+        // Форматируем целое число с пробелами (убираем дробную часть для больших чисел)
+        let numStr = Math.floor(num).toString();
+        return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
+    // Функция для преобразования отформатированного числа обратно в число
+    function parseFormattedNumber(value) {
+        if (!value) return '';
+        // Удаляем все пробелы и нецифровые символы
+        return value.toString().replace(/\s/g, '').replace(/[^\d.,]/g, '');
+    }
+
+    // Применяем форматирование к полям при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        const budgetInput = document.getElementById('budget');
+        const boxOfficeInput = document.getElementById('boxOfficeRevenue');
+
+        // Форматируем существующие значения
+        if (budgetInput && budgetInput.value) {
+            budgetInput.value = formatNumber(budgetInput.value);
+        }
+        if (boxOfficeInput && boxOfficeInput.value) {
+            boxOfficeInput.value = formatNumber(boxOfficeInput.value);
+        }
+
+        // Форматируем при вводе
+        if (budgetInput) {
+            budgetInput.addEventListener('input', function(e) {
+                let cursorPos = this.selectionStart;
+                let oldValue = this.value;
+                let newValue = formatNumber(this.value);
+                this.value = newValue;
+                // Восстанавливаем позицию курсора
+                let diff = newValue.length - oldValue.length;
+                this.setSelectionRange(cursorPos + diff, cursorPos + diff);
+            });
+
+            budgetInput.addEventListener('blur', function() {
+                this.value = formatNumber(this.value);
+            });
+        }
+
+        if (boxOfficeInput) {
+            boxOfficeInput.addEventListener('input', function(e) {
+                let cursorPos = this.selectionStart;
+                let oldValue = this.value;
+                let newValue = formatNumber(this.value);
+                this.value = newValue;
+                // Восстанавливаем позицию курсора
+                let diff = newValue.length - oldValue.length;
+                this.setSelectionRange(cursorPos + diff, cursorPos + diff);
+            });
+
+            boxOfficeInput.addEventListener('blur', function() {
+                this.value = formatNumber(this.value);
+            });
+        }
+
+        // Перед отправкой формы преобразуем обратно в числа
+        document.getElementById('movieForm').addEventListener('submit', function(e) {
+            if (budgetInput && budgetInput.value) {
+                budgetInput.value = parseFormattedNumber(budgetInput.value);
+            }
+            if (boxOfficeInput && boxOfficeInput.value) {
+                boxOfficeInput.value = parseFormattedNumber(boxOfficeInput.value);
+            }
+        });
+    });
+</script>
 </body>
 </html>

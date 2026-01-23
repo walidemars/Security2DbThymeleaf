@@ -26,7 +26,7 @@
                     <h2>Расчет прибыли и окупаемости</h2>
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/calculate}" method="get">
+                    <form th:action="@{/calculate}" method="get" id="calculateForm">
                         <div class="mb-3">
                             <label class="form-label">Выберите фильм</label>
                             <select class="form-select" name="movieId" required>
@@ -36,6 +36,15 @@
                                         th:text="${movie.title}"
                                         th:selected="${selectedMovie != null and selectedMovie.id == movie.id}"></option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Дополнительные расходы (маркетинг, др. издержки)</label>
+                            <input type="text" 
+                                   class="form-control number-input" 
+                                   id="additionalExpenses"
+                                   name="additionalExpenses" 
+                                   th:value="${additionalExpenses != null ? additionalExpenses : ''}"
+                                   placeholder="0">
                         </div>
                         <button type="submit" class="btn btn-primary">Рассчитать</button>
                         <a th:href="@{/index}" class="btn btn-secondary">Отмена</a>
@@ -54,12 +63,16 @@
                               th:text="${#strings.replace(#numbers.formatDecimal(selectedMovie.budget, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                         <span th:if="${selectedMovie.budget == null}">не указан</span>
                     </p>
+                    <p th:if="${additionalExpenses != null and additionalExpenses > 0}">
+                        <strong>Дополнительные расходы (маркетинг, др. издержки):</strong>
+                        <span th:text="${#strings.replace(#numbers.formatDecimal(additionalExpenses, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
+                    </p>
                     <p>
                         <strong>Кассовые сборы (общие):</strong>
                         <span th:text="${#strings.replace(#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
                     <p>
-                        <strong>Прибыль (кассовые сборы минус бюджет):</strong>
+                        <strong>Прибыль (кассовые сборы минус бюджет и дополнительные расходы):</strong>
                         <span th:text="${#strings.replace(#numbers.formatDecimal(profit, 0, 'COMMA', 0, 'POINT'), ',', ' ') + ' $'}"></span>
                     </p>
                     <p>
@@ -75,5 +88,68 @@
         </div>
     </div>
 </div>
+<script>
+    // Функция для форматирования числа с пробелами
+    function formatNumber(value) {
+        if (!value) return '';
+        // Преобразуем значение в строку и удаляем пробелы
+        let str = value.toString().trim().replace(/\s/g, '');
+        if (!str) return '';
+        
+        // Пытаемся распарсить число (поддерживает научную нотацию)
+        let num = parseFloat(str);
+        if (isNaN(num)) {
+            // Если не удалось распарсить, пытаемся извлечь только цифры
+            str = str.replace(/[^\d]/g, '');
+            num = parseFloat(str);
+            if (isNaN(num)) return '';
+        }
+        
+        // Форматируем целое число с пробелами (убираем дробную часть для больших чисел)
+        let numStr = Math.floor(num).toString();
+        return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+
+    // Функция для преобразования отформатированного числа обратно в число
+    function parseFormattedNumber(value) {
+        if (!value) return '';
+        // Удаляем все пробелы и нецифровые символы
+        return value.toString().replace(/\s/g, '').replace(/[^\d.,]/g, '');
+    }
+
+    // Применяем форматирование к полю при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        const additionalExpensesInput = document.getElementById('additionalExpenses');
+
+        // Форматируем существующее значение
+        if (additionalExpensesInput && additionalExpensesInput.value) {
+            additionalExpensesInput.value = formatNumber(additionalExpensesInput.value);
+        }
+
+        // Форматируем при вводе
+        if (additionalExpensesInput) {
+            additionalExpensesInput.addEventListener('input', function(e) {
+                let cursorPos = this.selectionStart;
+                let oldValue = this.value;
+                let newValue = formatNumber(this.value);
+                this.value = newValue;
+                // Восстанавливаем позицию курсора
+                let diff = newValue.length - oldValue.length;
+                this.setSelectionRange(cursorPos + diff, cursorPos + diff);
+            });
+
+            additionalExpensesInput.addEventListener('blur', function() {
+                this.value = formatNumber(this.value);
+            });
+        }
+
+        // Перед отправкой формы преобразуем обратно в число
+        document.getElementById('calculateForm').addEventListener('submit', function(e) {
+            if (additionalExpensesInput && additionalExpensesInput.value) {
+                additionalExpensesInput.value = parseFormattedNumber(additionalExpensesInput.value);
+            }
+        });
+    });
+</script>
 </body>
 </html>

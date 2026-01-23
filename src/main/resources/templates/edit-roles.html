@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/index}">Каталог фильмов</a>
         <div class="navbar-nav ms-auto">
-            <a class="nav-link" th:href="@{/roles}">Назад</a>
+            <a class="nav-link" th:href="@{/users}">Назад</a>
         </div>
     </div>
 </nav>
@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <p><strong>Пользователь:</strong> <span th:text="${user.username}"></span></p>
                     <p><strong>Имя:</strong> <span th:text="${user.name}"></span></p>
-                    <form th:action="@{/roles/save}" method="post">
+                    <form th:action="@{/users/save-roles}" method="post">
                         <input type="hidden" name="userId" th:value="${user.id}"/>
                         <div class="mb-3">
                             <label class="form-label">Выберите роли:</label>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Сохранить</button>
-                        <a th:href="@{/roles}" class="btn btn-secondary">Отмена</a>
+                        <a th:href="@{/users}" class="btn btn-secondary">Отмена</a>
                     </form>
                 </div>
             </div>

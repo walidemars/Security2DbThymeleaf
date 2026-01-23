@@ -24,12 +24,19 @@ public class CalculateController {
     private MovieRepository movieRepository;
 
     @GetMapping("/calculate")
-    public ModelAndView showCalculateForm(@RequestParam(required = false) Long movieId) {
-        log.info("/calculate -> calculation form, movieId: {}", movieId);
+    public ModelAndView showCalculateForm(@RequestParam(required = false) Long movieId,
+                                          @RequestParam(required = false) Double additionalExpenses) {
+        log.info("/calculate -> calculation form, movieId: {}, additionalExpenses: {}", movieId, additionalExpenses);
         ModelAndView mav = new ModelAndView("calculate");
 
         List<Movie> movies = movieRepository.findAll();
         mav.addObject("movies", movies);
+
+        double additionalExpensesValue = 0.0;
+        if (additionalExpenses != null && additionalExpenses >= 0) {
+            additionalExpensesValue = additionalExpenses;
+        }
+        mav.addObject("additionalExpenses", additionalExpensesValue);
 
         if (movieId != null && movieId > 0) {
             Movie movie = movieRepository.findById(movieId).orElse(null);
@@ -50,9 +57,9 @@ public class CalculateController {
                     budget = movie.getBudget();
                 }
 
-                double profit = totalRevenue - budget;
+                double profit = totalRevenue - budget - additionalExpensesValue;
 
-                double requiredRevenueForBreakEven = 2 * budget;
+                double requiredRevenueForBreakEven = (budget + additionalExpensesValue) * 2;
                 double remainingToBreakEven = requiredRevenueForBreakEven - totalRevenue;
                 if (remainingToBreakEven < 0) {
                     remainingToBreakEven = 0;

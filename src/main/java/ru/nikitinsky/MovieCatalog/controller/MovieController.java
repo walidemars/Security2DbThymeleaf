@@ -159,7 +159,16 @@ public class MovieController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String deleteMovie(@RequestParam Long movieId) {
         log.info("/movies/delete -> deleting movie id: {}", movieId);
-        movieRepository.deleteById(movieId);
+        Optional<Movie> optionalMovie = movieRepository.findById(movieId);
+        if (optionalMovie.isPresent()) {
+            Movie movie = optionalMovie.get();
+            List<BoxOffice> boxOffices = boxOfficeRepository.findByMovie(movie);
+            if (boxOffices != null && !boxOffices.isEmpty()) {
+                boxOfficeRepository.deleteAll(boxOffices);
+                log.info("Deleted {} box office records for movie id: {}", boxOffices.size(), movieId);
+            }
+            movieRepository.deleteById(movieId);
+        }
         return "redirect:/movies";
     }
 }
